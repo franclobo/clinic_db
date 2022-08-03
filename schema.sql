@@ -49,3 +49,21 @@ ALTER TABLE IF EXISTS public.invoice_items
 
 COMMENT ON TABLE public.invoice_items
     IS 'create invoice_items table';
+    
+    CREATE TABLE public.invoice
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    total_amount numeric,
+    generated_at timestamp with time zone,
+    payed_at timestamp with time zone,
+    medical_history_id integer,
+    PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.invoice
+    OWNER to postgres;
+
+COMMENT ON TABLE public.invoice
+    IS 'create invoice table';
