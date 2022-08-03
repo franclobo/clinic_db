@@ -135,3 +135,20 @@ ALTER TABLE IF EXISTS public.invoices
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
+    
+-- Join invoice_items with invoices.
+ALTER TABLE IF EXISTS public.invoice_items
+    ADD CONSTRAINT fk_invoice FOREIGN KEY (invoice_id)
+    REFERENCES public.invoice (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+    
+-- Join invoice_items with treatments.
+ALTER TABLE IF EXISTS public.invoice_items
+    ADD CONSTRAINT fk_treatment FOREIGN KEY (treatment_id)
+    REFERENCES public.treatments (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+   
