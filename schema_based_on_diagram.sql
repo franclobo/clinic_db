@@ -130,7 +130,7 @@ ALTER TABLE IF EXISTS public.medical_histories
 
 -- Join medical_histories with invoices.
 ALTER TABLE IF EXISTS public.invoices
-    ADD CONSTRAINT " medical_fk" FOREIGN KEY (medical_history_id)
+    ADD CONSTRAINT medical_fk FOREIGN KEY (medical_history_id)
     REFERENCES public.medical_histories (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
