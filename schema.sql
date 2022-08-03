@@ -118,3 +118,20 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.medical_treatments
     OWNER to postgres;
+
+--Join medical_histories with patients.
+
+ALTER TABLE IF EXISTS public.medical_histories
+    ADD CONSTRAINT fk_patients FOREIGN KEY (patient_id)
+    REFERENCES public.patients (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+-- Join medical_histories with invoices.
+ALTER TABLE IF EXISTS public.invoices
+    ADD CONSTRAINT " medical_fk" FOREIGN KEY (medical_history_id)
+    REFERENCES public.medical_histories (id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
