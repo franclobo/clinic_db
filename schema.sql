@@ -151,4 +151,3 @@ ALTER TABLE IF EXISTS public.invoice_items
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
-   
