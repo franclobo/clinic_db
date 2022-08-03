@@ -151,3 +151,11 @@ ALTER TABLE IF EXISTS public.invoice_items
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
+
+-- Create FK indexes.
+CREATE INDEX ON medical_treatments (medical_history_id);
+CREATE INDEX ON medical_treatments (treatments_id);
+CREATE INDEX ON medical_histories (patient_id);
+CREATE INDEX ON invoices (medical_history_id);
+CREATE INDEX ON invoice_items (invoiced_id);
+CREATE INDEX ON invoice_items (treatment_id);
