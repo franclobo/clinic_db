@@ -1,3 +1,14 @@
+-- Create the clinic database.
+CREATE DATABASE clinic
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Spain.1252'
+    LC_CTYPE = 'Spanish_Spain.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+-- Create medical_histories table.
 CREATE TABLE public.medical_histories
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -15,6 +26,7 @@ ALTER TABLE IF EXISTS public.medical_histories
 COMMENT ON TABLE public.medical_histories
     IS 'Create medical_histories';
 
+-- Create patients table.
 CREATE TABLE public.patients
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
@@ -30,8 +42,9 @@ ALTER TABLE IF EXISTS public.patients
 
 COMMENT ON TABLE public.patients
     IS 'Create patients table.';
-    
-    CREATE TABLE public.invoice_items
+
+-- Create invoice_items table.
+CREATE TABLE public.invoice_items
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
     unit_price numeric,
@@ -49,8 +62,9 @@ ALTER TABLE IF EXISTS public.invoice_items
 
 COMMENT ON TABLE public.invoice_items
     IS 'create invoice_items table';
-    
-    CREATE TABLE public.invoice
+
+-- Create invoice table.
+CREATE TABLE public.invoice
 (
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
     total_amount numeric,
@@ -67,3 +81,40 @@ ALTER TABLE IF EXISTS public.invoice
 
 COMMENT ON TABLE public.invoice
     IS 'create invoice table';
+
+-- Create treatments table.
+CREATE TABLE public.treatments
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    type character varying(30),
+    name character varying(30),
+    PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.treatments
+    OWNER to postgres;
+
+-- Create medical_treatments join table.
+CREATE TABLE public.medical_treatments
+(
+    medical_history_id integer NOT NULL,
+    treatments_id integer NOT NULL,
+    PRIMARY KEY (medical_history_id, treatments_id),
+    CONSTRAINT medical_fk FOREIGN KEY (medical_history_id)
+        REFERENCES public.medical_histories (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT treatments_fk FOREIGN KEY (treatments_id)
+        REFERENCES public.treatments (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.medical_treatments
+    OWNER to postgres;
